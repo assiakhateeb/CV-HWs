@@ -22,7 +22,6 @@ def disparity_map_using_NCC(img_left, img_right, disp_left, block_size):
                 for i in range(col - max_disparity, col + 1):
                     if i - block_size // 2 >= 0 and block_size // 2 + i < width:
                         right_block = np.array(img_right[row:row + block_size, i:i + block_size])
-                        # NCC_val = NCC(left_block, right_block)
                         """flatten function Return a copy of the array collapsed into one dimension."""
                         """np.correlate return the cross-correlation of two 1-dimensional sequences."""
                         NCC_val = np.correlate(left_block.flatten() / np.linalg.norm(left_block),
