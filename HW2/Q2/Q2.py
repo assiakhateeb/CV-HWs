@@ -54,64 +54,96 @@ def disparity_map_using_SSD(img_left, img_right, disp_left, block_size):
     return d_map
 
 
-def Art_Pair_SSD(img_left, img_right, disp_left):
-    """ -------------------SSD, window=3------------------- """
-    start_time0 = time()
-    d_map0 = disparity_map_using_SSD(img_left, img_right, disp_left, 3)
-    print("(Art_Pair, SSD, win=3), time= %.4f" % ((time() - start_time0) / 60), "minutes")
-    plt.imsave('Art_Pair,SSD,win=3.jpg', d_map0)
-    img0 = load_image('Art_Pair,SSD,win=3.jpg')
-    cv.imwrite('Art_Pair,SSD,win=3.jpg', img0)
-
-    """ -------------------SSD, window=9------------------- """
-    start_time1 = time()
-    d_map1 = disparity_map_using_SSD(img_left, img_right, disp_left, 9)
-    print("(Art_Pair, SSD, win=9), time= %.4f" % ((time() - start_time1) / 60), "minutes")
-    plt.imsave('Art_Pair,SSD,win=9.jpg', d_map1)
-    img1 = load_image('Art_Pair,SSD,win=9.jpg')
-    cv.imwrite('Art_Pair,SSD,win=9.jpg', img1)
-
-    """ -------------------SSD, window=15------------------- """
-    start_time2 = time()
-    d_map2 = disparity_map_using_SSD(img_left, img_right, disp_left, 15)
-    print("(Art_Pair, SSD, win=15), time= %.4f" % ((time() - start_time2) / 60), "minutes")
-    plt.imsave('Art_Pair,SSD,win=15.jpg', d_map2)
-    img2 = load_image('Art_Pair,SSD,win=15.jpg')
-    cv.imwrite('Art_Pair,SSD,win=15.jpg', img2)
-
-
-def Art_Pair_NCC(img_left, img_right, disp_left):
-    """ -------------------NCC, window=3------------------- """
+def calc_dMap_using_SSD(img_left, img_right, disp_left, win_size, pair_name):
     start_time = time()
-    d_map = disparity_map_using_NCC(img_left, img_right, disp_left, 3)
-    print("(Art_Pair, NCC, win=3), time= %.4f" % ((time() - start_time) / 60), "minutes")
-    plt.imsave('Art_Pair,NCC,win=3.jpg', d_map)
-    img = load_image('Art_Pair,NCC,win=3.jpg')
-    cv.imwrite('Art_Pair,NCC,win=3.jpg', img)
+    d_map = disparity_map_using_SSD(img_left, img_right, disp_left, win_size)
+    print("(" + pair_name + ", SSD, win=" + str(win_size) + "), time= %.4f" % ((time() - start_time) / 60), "minutes")
+    img_name = pair_name + ',SSD,win=' + str(win_size) + '.jpg'
+    plt.imsave(img_name, d_map)
+    img = load_image(img_name)
+    cv.imwrite(img_name, img)
 
-    """ -------------------NCC, window=9------------------- """
-    start_time = time()
-    d_map = disparity_map_using_SSD(img_left, img_right, disp_left, 9)
-    print("(Art_Pair, NCC, win=9), time= %.4f" % ((time() - start_time) / 60), "minutes")
-    plt.imsave('Art_Pair,NCC,win=9.jpg', d_map)
-    img = load_image('Art_Pair,NCC,win=9.jpg')
-    cv.imwrite('Art_Pair,NCC,win=9.jpg', img)
 
-    """ -------------------NCC, window=15------------------- """
+def calc_dMap_using_NCC(img_left, img_right, disp_left, win_size, pair_name):
     start_time = time()
-    d_map = disparity_map_using_NCC(img_left, img_right, disp_left, 15)
-    print("(Art_Pair, NCC, win=15), time= %.4f" % ((time() - start_time) / 60), "minutes")
-    plt.imsave('Art_Pair,NCC,win=15.jpg', d_map)
-    img = load_image('Art_Pair,NCC,win=15.jpg')
-    cv.imwrite('Art_Pair,NCC,win=15.jpg', img)
+    d_map = disparity_map_using_NCC(img_left, img_right, disp_left, win_size)
+    print("(" + pair_name + ", NCC, win=" + str(win_size) + "), time= %.4f" % ((time() - start_time) / 60), "minutes")
+    img_name = pair_name + ',NCC,win=' + str(win_size) + '.jpg'
+    plt.imsave(img_name, d_map)
+    img = load_image(img_name)
+    cv.imwrite(img_name, img)
+
+
+# def Art_Pair_SSD(img_left, img_right, disp_left):
+#     """ -------------------SSD, window=3------------------- """
+#     start_time0 = time()
+#     d_map0 = disparity_map_using_SSD(img_left, img_right, disp_left, 3)
+#     print("(Art_Pair, SSD, win=3), time= %.4f" % ((time() - start_time0) / 60), "minutes")
+#     plt.imsave('Art_Pair,SSD,win=3.jpg', d_map0)
+#     img0 = load_image('Art_Pair,SSD,win=3.jpg')
+#     cv.imwrite('Art_Pair,SSD,win=3.jpg', img0)
+#
+#     """ -------------------SSD, window=9------------------- """
+#     start_time1 = time()
+#     d_map1 = disparity_map_using_SSD(img_left, img_right, disp_left, 9)
+#     print("(Art_Pair, SSD, win=9), time= %.4f" % ((time() - start_time1) / 60), "minutes")
+#     plt.imsave('Art_Pair,SSD,win=9.jpg', d_map1)
+#     img1 = load_image('Art_Pair,SSD,win=9.jpg')
+#     cv.imwrite('Art_Pair,SSD,win=9.jpg', img1)
+#
+#     """ -------------------SSD, window=15------------------- """
+#     start_time2 = time()
+#     d_map2 = disparity_map_using_SSD(img_left, img_right, disp_left, 15)
+#     print("(Art_Pair, SSD, win=15), time= %.4f" % ((time() - start_time2) / 60), "minutes")
+#     plt.imsave('Art_Pair,SSD,win=15.jpg', d_map2)
+#     img2 = load_image('Art_Pair,SSD,win=15.jpg')
+#     cv.imwrite('Art_Pair,SSD,win=15.jpg', img2)
+
+
+# def Art_Pair_NCC(img_left, img_right, disp_left):
+#     """ -------------------NCC, window=3------------------- """
+#     start_time = time()
+#     d_map = disparity_map_using_NCC(img_left, img_right, disp_left, 3)
+#     print("(Art_Pair, NCC, win=3), time= %.4f" % ((time() - start_time) / 60), "minutes")
+#     plt.imsave('Art_Pair,NCC,win=3.jpg', d_map)
+#     img = load_image('Art_Pair,NCC,win=3.jpg')
+#     cv.imwrite('Art_Pair,NCC,win=3.jpg', img)
+#
+#     """ -------------------NCC, window=9------------------- """
+#     start_time = time()
+#     d_map = disparity_map_using_SSD(img_left, img_right, disp_left, 9)
+#     print("(Art_Pair, NCC, win=9), time= %.4f" % ((time() - start_time) / 60), "minutes")
+#     plt.imsave('Art_Pair,NCC,win=9.jpg', d_map)
+#     img = load_image('Art_Pair,NCC,win=9.jpg')
+#     cv.imwrite('Art_Pair,NCC,win=9.jpg', img)
+#
+#     """ -------------------NCC, window=15------------------- """
+#     start_time = time()
+#     d_map = disparity_map_using_NCC(img_left, img_right, disp_left, 15)
+#     print("(Art_Pair, NCC, win=15), time= %.4f" % ((time() - start_time) / 60), "minutes")
+#     plt.imsave('Art_Pair,NCC,win=15.jpg', d_map)
+#     img = load_image('Art_Pair,NCC,win=15.jpg')
+#     cv.imwrite('Art_Pair,NCC,win=15.jpg', img)
 
 
 def main():
-    img_left = load_image('Q2/Art/im_left.png')
-    img_right = load_image('Q2/Art/im_right.png')
-    disp_left = load_image('Q2/Art/disp_left.png')
-    # Art_Pair_SSD(img_left, img_right, disp_left)
-    Art_Pair_NCC(img_left, img_right, disp_left)
+    """----------------Pair Art----------------"""
+    pairArt_img_left = load_image('Q2/Art/im_left.png')
+    pairArt_img_right = load_image('Q2/Art/im_right.png')
+    pairArt_disp_left = load_image('Q2/Art/disp_left.png')
+    # calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=3, pair_name='Art_Pair')
+    # calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=9, pair_name='Art_Pair')
+    # calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=15, pair_name='Art_Pair')
+    calc_dMap_using_NCC(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=3, pair_name='Art_Pair')
+
+    """----------------Pair Dolls----------------"""
+    pairDolls_img_left = load_image('Q2/Dolls/im_left.png')
+    pairDolls_img_right = load_image('Q2/Dolls/im_right.png')
+    pairDolls_disp_left = load_image('Q2/Dolls/disp_left.png')
+    # calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=3, pair_name='Dolls_Pair')
+    # calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=9, pair_name='Dolls_Pair')
+    # calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=15, pair_name='Dolls_Pair')
+    calc_dMap_using_NCC(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=3, pair_name='Dolls_Pair')
 
 
 main()
