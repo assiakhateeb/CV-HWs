@@ -55,14 +55,31 @@ def disparity_map_using_SSD(img_left, img_right, disp_left, block_size):
     return d_map
 
 
+def bad05_bad4(mapA, mapB):
+    diff = np.abs(mapA - mapB)
+    elements_num = (diff >= 0).sum()
+    """Bad05 = percentage of disparities whose error is above 0.5 """
+    bad5 = (diff > 0.5).sum()
+    """Bad05 = percentage of disparities whose error is above 4 """
+    bad4 = (diff > 4).sum()
+    percent05 = (bad5 / elements_num) * 100
+    percent4 = ((bad4 / elements_num) * 100)
+    return percent05, percent4
+
+
 def utilts_1(img_left, img_right, disp_left, win_size, pair_name):
     start_time = time()
     d_map = disparity_map_using_SSD(img_left, img_right, disp_left, win_size)
     end_time = (time() - start_time) / 60
+    """avgErr = mean of absolute differences in pixels"""
     avgErr = np.mean(np.absolute(d_map - disp_left))
+    """medErr = median of absolute differences in pixels"""
     medErr = np.median(np.absolute(d_map - disp_left))
-    print("(" + pair_name + ", SSD, win=" + str(win_size) + "), time=%.4f" % end_time, "minutes,", "AvgErr=%.4f," % avgErr, "medErr=%.4f" % medErr)
-    img_name = 'results_for_SSD/' + pair_name + ' ,SSD,win=' + str(win_size) + str(" ,AvgErr=%.4f" % avgErr) + " ,MedErr=%.4f" % medErr + '.jpg'
+    bad05, bad4 = bad05_bad4(d_map, disp_left)
+    print("(" + pair_name + ", SSD, win=" + str(win_size) + "), time=%.4f" % end_time, "minutes,",
+          "AvgErr=%.4f," % avgErr, "medErr=%.4f," % medErr, "Bad05=%.4f," % bad05, "%", "Bad4=%.4f" % bad4, "%")
+    img_name = 'results_for_SSD/' + pair_name + ' ,SSD,win=' + str(win_size) + str(
+        " ,AvgErr=%.4f" % avgErr) + " ,MedErr=%.4f" % medErr + " ,Bad05=%.4f" % bad05 + "%" + " ,Bad4=%.4f" % bad4 + "%" + '.jpg'
     plt.imsave(img_name, d_map)
     img = load_image(img_name)
     cv.imwrite(img_name, img)
@@ -74,8 +91,11 @@ def utilts_2(img_left, img_right, disp_left, win_size, pair_name):
     end_time = (time() - start_time) / 60
     avgErr = np.mean(np.absolute(d_map - disp_left))
     medErr = np.median(np.absolute(d_map - disp_left))
-    print("(" + pair_name + ", NCC, win=" + str(win_size) + "), time=%.4f" % end_time, "minutes,", "AvgErr=%.4f," % avgErr, "medErr=%.4f" % medErr)
-    img_name = 'results_for_NCC/' + pair_name + ' ,NCC,win=' + str(win_size) + str(" ,AvgErr=%.4f" % avgErr) + " ,MedErr=%.4f" % medErr + '.jpg'
+    bad05, bad4 = bad05_bad4(d_map, disp_left)
+    print("(" + pair_name + ", NCC, win=" + str(win_size) + "), time=%.4f" % end_time, "minutes,",
+          "AvgErr=%.4f," % avgErr, "medErr=%.4f," % medErr, "Bad05=%.4f," % bad05, "%", "Bad4=%.4f" % bad4, "%")
+    img_name = 'results_for_NCC/' + pair_name + ' ,NCC,win=' + str(win_size) + str(
+        " ,AvgErr=%.4f" % avgErr) + " ,MedErr=%.4f" % medErr + " ,Bad05=%.4f" % bad05 + "%" + " ,Bad4=%.4f" % bad4 + "%" + '.jpg'
     plt.imsave(img_name, d_map)
     img = load_image(img_name)
     cv.imwrite(img_name, img)
@@ -97,28 +117,25 @@ def main():
     pairMoebius_img_right = load_image('Q2/Moebius/im_right.png')
     pairMoebius_disp_left = load_image('Q2/Moebius/disp_left.png')
     pairMoebius_disp_left = np.array(pairMoebius_disp_left) / 3
-    # window = [3, 9, 15]
-    window = [3]
+    window = [3, 9, 15]
 
     """--------------First Calc disparity map using SSD for all image pairs--------------"""
-    # sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
-    # for i in window:
-    #     utilts_1(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
-        # calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i,
-        #                     pair_name='Dolls_Pair')
-        # calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i,
-        #                     pair_name='Moebius_Pair')
-        # diff(pairArt_SSD_map, pairArt_disp_left)
+    sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
+    for i in window:
+        utilts_1(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
+        utilts_1(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i, pair_name='Dolls_Pair')
+        utilts_1(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i,
+                 pair_name='Moebius_Pair')
     sys.stdout.close()
 
     """--------------Second Calc disparity map using NCC for all image pairs--------------"""
     sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
     for i in window:
         utilts_2(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
-    #     calc_dMap_using_NCC(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i,
-    #                         pair_name='Dolls_Pair')
-    #     calc_dMap_using_NCC(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i,
-    #                         pair_name='Moebius_Pair')
+        utilts_2(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i,
+                 pair_name='Dolls_Pair')
+        utilts_2(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i,
+                 pair_name='Moebius_Pair')
     sys.stdout.close()
 
 
