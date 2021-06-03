@@ -1,9 +1,0 @@
-(Art_Pair, SSD, win=3), time= 2.8179 minutes
-(Dolls_Pair, SSD, win=3), time= 3.3433 minutes
-(Moebius_Pair, SSD, win=3), time= 2.5564 minutes
-(Art_Pair, SSD, win=9), time= 2.3311 minutes
-(Dolls_Pair, SSD, win=9), time= 2.3942 minutes
-(Moebius_Pair, SSD, win=9), time= 2.4156 minutes
-(Art_Pair, SSD, win=15), time= 2.4271 minutes
-(Dolls_Pair, SSD, win=15), time= 2.3380 minutes
-(Moebius_Pair, SSD, win=15), time= 2.5114 minutes
