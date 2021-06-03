@@ -1,1 +1,12 @@
 ## _Results for SSD_
+#### (Art_Pair, SSD, win=3), time=2.8043 minutes, AvgErr=11.7961, medErr=3.3333, Bad05=74.3693, % Bad4=46.8922 %
+#### (Art_Pair, SSD, win=9), time=2.5434 minutes, AvgErr=11.5504, medErr=1.6667, Bad05=69.9971, % Bad4=41.8849 %
+#### (Art_Pair, SSD, win=15), time=2.5802 minutes, AvgErr=13.2482, medErr=2.0000, Bad05=74.4837, % Bad4=45.7358 %
+#### ________________________________________________________________________________________________________________________________
+#### (Dolls_Pair, SSD, win=3), time=2.6026 minutes, AvgErr=8.5113, medErr=1.0000, Bad05=62.3040, % Bad4=31.9053 %
+#### (Dolls_Pair, SSD, win=9), time=2.5144 minutes, AvgErr=7.8152, medErr=0.6667, Bad05=62.8527, % Bad4=24.4849 %
+#### (Dolls_Pair, SSD, win=15), time=2.5580 minutes, AvgErr=9.6753, medErr=1.0000, Bad05=71.5989, % Bad4=30.6801 %
+#### ________________________________________________________________________________________________________________________________
+#### (Moebius_Pair, SSD, win=3), time=2.5443 minutes, AvgErr=9.4719, medErr=1.3333, Bad05=60.9643, % Bad4=40.4436 %
+#### (Moebius_Pair, SSD, win=9), time=2.4830 minutes, AvgErr=8.0391, medErr=0.6667, Bad05=54.5543, % Bad4=31.1996 %
+#### (Moebius_Pair, SSD, win=15), time=2.5174 minutes, AvgErr=9.1550, medErr=1.0000, Bad05=60.3683, % Bad4=34.4113 %
