@@ -1,9 +1,0 @@
-(Art_Pair, NCC, win=3), time= 7.7952 minutes
-(Dolls_Pair, NCC, win=3), time= 7.8767 minutes
-(Moebius_Pair, NCC, win=3), time= 7.6263 minutes
-(Art_Pair, NCC, win=9), time= 7.9551 minutes
-(Dolls_Pair, NCC, win=9), time= 8.1872 minutes
-(Moebius_Pair, NCC, win=9), time= 8.4330 minutes
-(Art_Pair, NCC, win=15), time= 9.0818 minutes
-(Dolls_Pair, NCC, win=15), time= 9.0929 minutes
-(Moebius_Pair, NCC, win=15), time= 8.5646 minutes
