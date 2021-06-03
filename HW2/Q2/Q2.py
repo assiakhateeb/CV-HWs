@@ -97,12 +97,12 @@ def main():
     # window = [3, 9]
 
     """--------------First Calc disparity map using SSD for all image pairs--------------"""
-    # sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
-    # for i in window:
-    #     calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
-    #     calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i, pair_name='Dolls_Pair')
-    #     calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i, pair_name='Moebius_Pair')
-    # sys.stdout.close()
+    sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
+    for i in window:
+        calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
+        calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i, pair_name='Dolls_Pair')
+        calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i, pair_name='Moebius_Pair')
+    sys.stdout.close()
 
     """--------------Second Calc disparity map using NCC for all image pairs--------------"""
     sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
