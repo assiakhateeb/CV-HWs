@@ -71,9 +71,9 @@ def calc_dMap_using_SSD(img_left, img_right, disp_left, win_size, pair_name):
 def calc_dMap_using_NCC(img_left, img_right, disp_left, win_size, pair_name):
     start_time = time()
     d_map = disparity_map_using_NCC(img_left, img_right, disp_left, win_size)
-    sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
+    # sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
     print("(" + pair_name + ", NCC, win=" + str(win_size) + "), time= %.4f" % ((time() - start_time) / 60), "minutes")
-    sys.stdout.close()
+    # sys.stdout.close()
     img_name = 'results_for_NCC/' + pair_name + ',NCC,win=' + str(win_size) + '.jpg'
     plt.imsave(img_name, d_map)
     img = load_image(img_name)
@@ -97,12 +97,12 @@ def main():
     # window = [3, 9]
 
     """--------------First Calc disparity map using SSD for all image pairs--------------"""
-    sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
-    for i in window:
-        calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
-        calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i, pair_name='Dolls_Pair')
-        calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i, pair_name='Moebius_Pair')
-    sys.stdout.close()
+    # sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
+    # for i in window:
+    #     calc_dMap_using_SSD(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
+    #     calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i, pair_name='Dolls_Pair')
+    #     calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i, pair_name='Moebius_Pair')
+    # sys.stdout.close()
 
     """--------------Second Calc disparity map using NCC for all image pairs--------------"""
     sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
