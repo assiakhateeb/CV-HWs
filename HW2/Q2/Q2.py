@@ -13,7 +13,7 @@ def load_image(path):
 def disparity_map_using_NCC(img_left, img_right, disp_left, block_size):
     height, width = img_left.shape
     d_map = np.zeros(img_left.shape)
-    max_disparity = int(disp_left.max() / 3)
+    max_disparity = int(disp_left.max())
     shift = 0
     for row in range(height - block_size + 1):
         for col in range(width - block_size + 1):
@@ -98,12 +98,12 @@ def main():
     pairMoebius_disp_left = load_image('Q2/Moebius/disp_left.png')
     pairMoebius_disp_left = np.array(pairMoebius_disp_left) / 3
     # window = [3, 9, 15]
-    window = [3, 9]
+    window = [3]
 
     """--------------First Calc disparity map using SSD for all image pairs--------------"""
-    sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
-    for i in window:
-        utilts_1(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
+    # sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
+    # for i in window:
+    #     utilts_1(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
         # calc_dMap_using_SSD(pairDolls_img_left, pairDolls_img_right, pairDolls_disp_left, win_size=i,
         #                     pair_name='Dolls_Pair')
         # calc_dMap_using_SSD(pairMoebius_img_left, pairMoebius_img_right, pairMoebius_disp_left, win_size=i,
