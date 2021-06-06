@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from time import time
 import sys
+import os
 
 
 def load_image(path):
@@ -60,7 +61,7 @@ def bad05_bad4(mapA, mapB):
     elements_num = (diff >= 0).sum()
     """Bad05 = percentage of disparities whose error is above 0.5 """
     bad5 = (diff > 0.5).sum()
-    """Bad05 = percentage of disparities whose error is above 4 """
+    """Bad4 = percentage of disparities whose error is above 4 """
     bad4 = (diff > 4).sum()
     percent05 = (bad5 / elements_num) * 100
     percent4 = ((bad4 / elements_num) * 100)
@@ -117,9 +118,11 @@ def main():
     pairMoebius_img_right = load_image('Q2/Moebius/im_right.png')
     pairMoebius_disp_left = load_image('Q2/Moebius/disp_left.png')
     pairMoebius_disp_left = np.array(pairMoebius_disp_left) / 3
-    window = [3, 9, 15]
+    window = [3, 9, 15]   
 
     """--------------First Calc disparity map using SSD for all image pairs--------------"""
+    folder = 'results_for_SSD'
+    os.makedirs(folder)
     sys.stdout = open("results_for_SSD/results_for_SSD.txt", "w")
     for i in window:
         utilts_1(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
@@ -129,6 +132,8 @@ def main():
     sys.stdout.close()
 
     """--------------Second Calc disparity map using NCC for all image pairs--------------"""
+    folder = 'results_for_NCC'
+    os.makedirs(folder)
     sys.stdout = open("results_for_NCC/results_for_NCC.txt", "w")
     for i in window:
         utilts_2(pairArt_img_left, pairArt_img_right, pairArt_disp_left, win_size=i, pair_name='Art_Pair')
