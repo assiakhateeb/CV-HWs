@@ -1,7 +1,6 @@
 import numpy as np
 import useful_python_code.sintel_io as sio
 import cv2 as cv
-import copy as cp
 import os
 from time import time
 
@@ -46,8 +45,6 @@ def back_to_2d(intrinsic, depth, image, extrinsic):
             if 0 <= y < height and 0 <= x < width:
                 Im[y, x] = image[v, u]
             i += 1
-
-    # cv.imwrite('aa.png', Im)
     return Im
 
 
@@ -70,15 +67,15 @@ def rotation_mat(theta_x, theta_y, theta_z):
     return rotate_x, rotate_y, rotate_z
 
 
-def new_pose(rotation=None, translation=None):
-    if rotation is None:
-        rotation = np.array([0, 0, 0])
-    if translation is None:
-        translation = np.array([0, 0, 0])
+def new_pose(r=None, t=None):
+    if r is None:
+        r = np.array([0, 0, 0])
+    if t is None:
+        t = np.array([0, 0, 0])
 
-    ext = [[1, 0, 0, translation[0]], [0, 1, 0, translation[1]], [0, 0, 1, translation[2]], [0, 0, 0, 1]]
+    ext = [[1, 0, 0, t[0]], [0, 1, 0, t[1]], [0, 0, 1, t[2]], [0, 0, 0, 1]]
     ext = np.array(ext)
-    x, y, z = rotation_mat(rotation[0] * np.pi / 180, rotation[1] * np.pi / 180, rotation[2] * np.pi / 180)
+    x, y, z = rotation_mat(r[0] * np.pi / 180, r[1] * np.pi / 180, r[2] * np.pi / 180)
     pose = x.dot(y.dot(z.dot(ext)))
     return pose
 
@@ -89,29 +86,29 @@ def make_view(im_path, image, folder):
     intrinsic, extrinsic = sio.cam_read(im_path + '.cam')  # intrinsic matrix = K, N = extrinsic matrix
     """K is the camera intrinsics matrix"""
     k_inv = np.linalg.inv(intrinsic)
-    j = 1
-    rotation = [0, 0, 0]
-    translation = [0, 0, 0]
+    i = 1
+    rot = [0, 0, 0]
+    trans = [0, 0, 0]
     r = np.array([0., 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.])
     r_frames = [r, -r, -r, r]
     t = np.array([0., 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.])
     t_frames = [t, -t, -t, t]
-    for rotationOrTranslation in ['rotation', 'translation']:
-        for axis in [0, 1, 2]:
+    for loop in ['rot', 'trans']:
+        for j in [0, 1, 2]:
             frames = r_frames
-            if rotationOrTranslation == 'translation':
+            if loop == 'trans':
                 frames = t_frames
             for frame in frames:
-                for i in frame:
-                    if rotationOrTranslation == 'translation':
-                        translation[axis] += i
+                for f in frame:
+                    if loop == 'trans':
+                        trans[j] += f
                     else:
-                        rotation[axis] += i
-                    pose = new_pose(cp.deepcopy(rotation), cp.deepcopy(translation))
+                        rot[j] += f
+                    pose = new_pose(rot, trans)
                     pose = np.array([pose[0], pose[1], pose[2]])
                     Im1 = back_to_2d(intrinsic, depth, image, pose)
-                    cv.imwrite(folder + '/' + str(j) + '.png', Im1)
-                    j += 1
+                    cv.imwrite(folder + '/' + str(i) + '.png', Im1)
+                    i += 1
     end_time = (time() - start_time) / 60
     print(im_path, "time=%.4f" % end_time, "minutes,")
 
